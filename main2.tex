@@ -114,7 +114,11 @@ Se evidencian múltiples deficiencias en la redacción y cohesión del documento
 \textbf{Ubicación en la tesis:} Capítulo 2, sección ``Ecuación de Onda'', párrafo final de la sección.
 }
 
-\itemrow{P-02}{- En óptica no lineal, el termino gradiente de la divergencia no es cero. El autor afirma que esto es cierto cuando es una onda plana (porque las ondas planas) y cuando el cambio de la amplitud es lento, que tiene que ver el cambio lento en el tiempo con términos que miden las variaciones espaciales d/dx, d/dy, d/dz?}{}
+\itemrow{P-02}{- En óptica no lineal, el termino gradiente de la divergencia no es cero. El autor afirma que esto es cierto cuando es una onda plana (porque las ondas planas) y cuando el cambio de la amplitud es lento, que tiene que ver el cambio lento en el tiempo con términos que miden las variaciones espaciales d/dx, d/dy, d/dz?}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La redacción original era imprecisa, pues podía interpretarse como si una variación lenta en el tiempo justificara despreciar un término que contiene derivadas espaciales. Se aclaró que la variación lenta relevante es espacial y que, en óptica no lineal, $\nabla(\nabla\cdot E)$ no se anula en general.\par
+\textbf{Cambio realizado:} Se añadió la relación $\epsilon\nabla\cdot E=-\nabla\cdot P_{NL}$ para mostrar que una polarización no lineal con variación espacial puede producir $\nabla\cdot E\neq0$. También se precisó que la aproximación usada corresponde a ondas transversales o a una formulación escalar/paraxial de envolvente lentamente variable en el espacio. Finalmente, se conectó esta aproximación con el modelo BPM usado posteriormente para propagación en tejido biológico.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, sección ``Ecuación de Onda''.
+}
 
 \itemrow{P-03}{- Pág 25 hay un typo en el texto. Aparece Delta+c, creo que el autor se refiere a Delta+}{%
 \textbf{Respuesta al revisor:} Se acoge la observación. La expresión indicada corresponde a un error tipográfico de notación, no a un operador distinto. En el párrafo se comparan el operador de diferencia hacia adelante $\Delta^+$ y el operador de diferencia central $\Delta^c$.\par
@@ -134,37 +138,101 @@ Se evidencian múltiples deficiencias en la redacción y cohesión del documento
 \textbf{Ubicación en la tesis:} Capítulo 2, sección ``Estabilidad de Von Neumann'', ecuaciones y párrafos asociados al factor de amplificación \(g\).
 }
 
-\itemrow{P-06}{- En el ejemplo FDS Lax Friedrich qué menciona el autor, existe una especie de promediado espacial para el U\textasciicircum{}n\_m. Cree el autor que esto influye en la estabilidad numérica evaluada?. Cuales serían las implicaciones de usar el u\textasciicircum{}n\_m?}{}
+\itemrow{P-06}{- En el ejemplo FDS Lax Friedrich qué menciona el autor, existe una especie de promediado espacial para el U\textasciicircum{}n\_m. Cree el autor que esto influye en la estabilidad numérica evaluada?. Cuales serían las implicaciones de usar el u\textasciicircum{}n\_m?}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. El promedio espacial señalado es una característica esencial del esquema de Lax-Friedrichs y sí influye directamente en la estabilidad numérica evaluada. Si se reemplaza dicho promedio por \(u_m^n\), se obtiene el esquema FTCS para la ecuación de transporte lineal, el cual resulta inestable para modos de Fourier no triviales. El promedio espacial de Lax-Friedrichs mejora la estabilidad bajo la condición \(|\lambda|\leq1\), pero introduce difusión artificial o amortiguamiento numérico.\par
+\textbf{Cambio realizado:} Se amplió la explicación del esquema Lax-Friedrichs, indicando el papel del promedio espacial, su efecto sobre la estabilidad y la consecuencia de reemplazarlo por \(u_m^n\). También se aclaró que este ejemplo es un caso de estudio sobre la selección de esquemas de discretización, no el esquema usado en la implementación BPM 2D.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, sección ``Estabilidad de Von Neumann''.
+}
 
-\itemrow{P-07}{- Se sugiere al autor señalar la expansión en series de la función u\textasciicircum{}n\_m para dar claridad de los parámetros k, h, m}{}
+\itemrow{P-07}{- Se sugiere al autor señalar la expansión en series de la función u\textasciicircum{}n\_m para dar claridad de los parámetros k, h, m}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. Se aclaró que la expresión \(u_m^n=g^n e^{-jkmh}\) no se introduce de forma arbitraria, sino que corresponde al análisis de un modo individual de una expansión discreta en series de Fourier.\par
+\textbf{Cambio realizado:} Se añadió la expansión \(u_m^n=\sum_{\ell}\hat{u}_{\ell}^{\,n}e^{-j k_\ell m h}\) y se explicó el paso hacia el modo individual \(u_m^n=\hat{u}^{\,n}e^{-jkmh}\), con \(\hat{u}^{\,n}=g^n\hat{u}^{\,0}\). También se definieron explícitamente \(m\) como índice espacial, \(h=\Delta x\) como espaciamiento de malla, \(k\) como número de onda, \(kh\) como fase discreta entre nodos consecutivos, \(n\) como índice temporal y \(g\) como factor de amplificación por paso temporal.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, sección ``Estabilidad de Von Neumann'', párrafo previo a la ecuación \(u_m^n=g^n e^{-jkmh}\).
+}
 
-\itemrow{P-08}{- Según las indicaciones del autor, si la estabilidad es g\textless{}1 para todo valor de n, es g real?}{}
+\itemrow{P-08}{- Según las indicaciones del autor, si la estabilidad es g\textless{}1 para todo valor de n, es g real?}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La redacción original era imprecisa porque podía interpretarse como si el factor de amplificación \(g\) fuera real y pudiera evaluarse mediante la desigualdad \(g<1\). En el análisis de estabilidad de Von Neumann, \(g\) puede ser complejo. Para el esquema considerado se obtiene \(g(kh,\lambda)=\cos(kh)+j\lambda\sin(kh)\), por lo que la estabilidad debe evaluarse sobre su módulo, mediante la condición \(|g(kh,\lambda)|\leq 1\) para todo modo de Fourier. Además, para un modo de Fourier fijo, \(g\) no depende del índice temporal \(n\); el término que depende de \(n\) es \(g^n\).\par
+\textbf{Cambio realizado:} Se corrigió la redacción del criterio de estabilidad, reemplazando \(g<1\) por \(|g(kh,\lambda)|\leq 1\), y se hizo explícito que \(g\) es un factor de amplificación complejo. También se agregó la expresión \(|g|^2=\cos^2(kh)+\lambda^2\sin^2(kh)\), de la cual se obtiene la condición \(|\lambda|\leq 1\).\par
+\textbf{Ubicación en la tesis:} Capítulo 2, sección ``Estabilidad de Von Neumann'', ecuaciones y párrafos asociados al factor de amplificación \(g\).
+}
 
-\itemrow{P-09}{- Porque concluye el autor de que hay perdida de energía en la propagación del pulso, si no hay ningún término dispersivo?. La solución exacta de la ecuación (2-34) predice del alguna manera una deformación del pulso o es un desplazamiento sin deformación?}{}
+\itemrow{P-09}{- Porque concluye el autor de que hay perdida de energía en la propagación del pulso, si no hay ningún término dispersivo?. La solución exacta de la ecuación (2-34) predice del alguna manera una deformación del pulso o es un desplazamiento sin deformación?}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La redacción original fue imprecisa, pues podía interpretarse como una pérdida física de energía. La ecuación señalada corresponde a una ecuación de transporte lineal, cuya solución exacta es un desplazamiento del pulso sin deformación ni pérdida física de amplitud. La reducción del pico observada en la solución numérica estable corresponde a amortiguamiento numérico, o difusión artificial, introducido por el esquema de Lax-Friedrichs y por la discretización.\par
+\textbf{Cambio realizado:} Se corrigió la interpretación de la figura estable y se aclaró explícitamente la diferencia entre la solución exacta del modelo físico y los efectos artificiales que pueden introducir los esquemas numéricos. También se ajustó la sección de dispersión y amortiguamiento numérico para indicar que la discretización puede producir suavizado, reducción de amplitud o crecimiento espurio de modos, según la condición de estabilidad.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, secciones ``Estabilidad de Von Neumann'' y ``Dispersión Numérica y Amortiguamiento''.
+}
 
-\itemrow{P-10}{- Se sugiere corregir todo el texto de la sección 2.3 en especial la interpretación que se le da a la gráfica 2-1. Solo hasta la sección 2-5 se habla correctamente de la solución de la ecuación diferencial propuesta como ejemplo.}{}
+\itemrow{P-10}{- Se sugiere corregir todo el texto de la sección 2.3 en especial la interpretación que se le da a la gráfica 2-1. Solo hasta la sección 2-5 se habla correctamente de la solución de la ecuación diferencial propuesta como ejemplo.}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. Se corrigió la interpretación de la sección 2.3 para dejar claro que la gráfica 2-1 no representa la solución exacta de la ecuación diferencial, sino una solución numérica estable del esquema de Lax-Friedrichs.\par
+\textbf{Cambio realizado:} Se aclaró en la sección 2.3 que la solución exacta de la ecuación de transporte es $u(x,t)=f(x-t)$, por lo que el pulso físico se desplaza sin deformación ni pérdida de amplitud. La reducción del pico observada en la gráfica se reinterpretó como amortiguamiento numérico o difusión artificial del esquema. También se armonizó esta explicación con la sección 2.5, donde se discute la dispersión numérica y el amortiguamiento.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, sección ``Estabilidad de Von Neumann'', interpretación de la figura estable; y sección ``Dispersión Numérica y Amortiguamiento''.
+}
 
-\itemrow{P-11}{- El autor debería proveer los valores de Lambda para el cual la solución es estable y converge al resultado teórico, de manera que pueda validar su implementación numérica}{}
+\itemrow{P-11}{- El autor debería proveer los valores de Lambda para el cual la solución es estable y converge al resultado teórico, de manera que pueda validar su implementación numérica}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. Se aclaró que, en el ejemplo de Lax-Friedrichs, \(\lambda\) corresponde al parámetro numérico \(\Delta t/\Delta x\), no a la longitud de onda óptica. Para pasos positivos de discretización, el intervalo estable es \(0<\lambda\leq1\). El caso estable usado en la simulación corresponde a \(\lambda=10/11\approx0.90909\), mientras que \(\lambda=1.1\) se empleó como contraste inestable. Además, se añadió una verificación de convergencia frente a la solución exacta de la ecuación de transporte.\par
+\textbf{Cambio realizado:} Se incorporó el intervalo de estabilidad, se explicitaron los valores de \(\lambda\) usados en el ejemplo y se agregó una tabla de refinamiento de malla con los errores numéricos \(\varepsilon_2\) y \(\varepsilon_\infty\), mostrando su disminución al refinar la discretización.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, sección ``Estabilidad de Von Neumann''.
+}
 
-\itemrow{P-12}{- El autor relaciona los métodos numéricos de FDTD pero no presenta su implementación. Implementó FDTD el autor?, cuáles fueron sus casos de análisis y resultados numéricos?}{}
+\itemrow{P-12}{- El autor relaciona los métodos numéricos de FDTD pero no presenta su implementación. Implementó FDTD el autor?, cuáles fueron sus casos de análisis y resultados numéricos?}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. FDTD no fue implementado en esta tesis y, por tanto, no existen casos de análisis ni resultados numéricos obtenidos mediante dicho método. La mención previa a FDTD correspondía a un marco teórico preliminar sobre métodos numéricos de propagación electromagnética, pero su extensión podía sugerir equivocadamente que el método hacía parte de la metodología implementada.\par
+\textbf{Cambio realizado:} Se retiró la sección independiente dedicada a FDTD en el capítulo 2 y se conservó únicamente una delimitación breve al final de la nueva sección sobre BPM. Allí se aclara que métodos \textit{full-wave} como FDTD serían pertinentes si el objetivo fuera resolver la evolución vectorial completa del campo electromagnético, la polarización, el campo cercano, la retrodispersión fuerte o microestructuras sublongitud de onda. Sin embargo, esos efectos no corresponden al observable ni al nivel de descripción del caso de estudio del capítulo 5, que se restringe a la propagación hacia adelante de una envolvente escalar compleja y a la degradación de la intensidad/PSF en tejido dispersivo.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, sección ``Modelo de propagación de haz en aproximación paraxial''; y Capítulo 5, sección ``Modelo Físico y Estrategia Numérica''.
+}
 
-\itemrow{P-13}{- El autor sugiere que de la ecuación 2-17 se puede llegar a la ecuación 2-68. Considero que no es inmediata su consecución yhay un conjunto de consideraciones sobre el campo eléctrico. Cuales son las consideraciones más importantes?, deben ser señaladas. Es E en 2-17 vector?, es U en 2-68 escalar?}{}
+\itemrow{P-13}{- El autor sugiere que de la ecuación 2-17 se puede llegar a la ecuación 2-68. Considero que no es inmediata su consecución yhay un conjunto de consideraciones sobre el campo eléctrico. Cuales son las consideraciones más importantes?, deben ser señaladas. Es E en 2-17 vector?, es U en 2-68 escalar?}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La ecuación de onda señalada por el revisor corresponde a una formulación vectorial para el campo eléctrico \(\mathbf{E}\), mientras que la ecuación de la NLSE indicada en la observación corresponde a una ecuación escalar de envolvente. Por tanto, la NLSE no debe presentarse como una consecuencia inmediata de la ecuación vectorial, sino como un modelo reducido obtenido bajo aproximaciones adicionales. También se aclaró que, en el capítulo 5, la variable \(\phi\) cumple un papel análogo al de una envolvente compleja escalar, pero en un modelo BPM/paraxial espacial orientado al caso de espectroscopia de tejido profundo.\par
+\textbf{Cambio realizado:} Se amplió la sección ``Ecuación NLSE'' para incluir el paso de campo vectorial a envolvente escalar, la hipótesis de polarización dominante, el carácter cuasi-monocromático del campo, la aproximación de envolvente lentamente variable y la propagación predominante en \(z\). Además, se separó el tratamiento de BPM en una sección independiente, donde se define \(\phi(x,y,z)\) como envolvente compleja escalar, se explican las hipótesis paraxiales del modelo y se relaciona el caso del capítulo 5 con difracción transversal, absorción lineal, absorción de dos fotones y máscaras de fase estadísticas.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, secciones ``Ecuación NLSE'' y ``Modelo de propagación de haz en aproximación paraxial''; y Capítulo 5, sección ``Modelo Físico y Estrategia Numérica''.
+}
 
-\itemrow{P-14}{- No es clara la relación de los métodos relacionados con los casos de uso que plantea el autor en su introducción y resumen.}{}
+\itemrow{P-14}{- No es clara la relación de los métodos relacionados con los casos de uso que plantea el autor en su introducción y resumen.}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La redacción previa no diferenciaba con suficiente claridad entre los modelos teóricos presentados y los casos de uso implementados en los capítulos de resultados.\par
+\textbf{Cambio realizado:} Se reorganizó el capítulo 2 para separar la formulación de la NLSE, asociada al caso unidimensional de SPM tratado en el capítulo 4, del modelo BPM escalar/paraxial, asociado al caso bidimensional de propagación en tejido biológico tratado en el capítulo 5. Esta separación permite que el lector identifique qué modelo físico-matemático respalda cada implementación y evita presentar métodos no usados, como FDTD, como parte de la metodología de resultados.\par
+\textbf{Ubicación en la tesis:} Capítulo 2, secciones ``Ecuación NLSE'' y ``Modelo de propagación de haz en aproximación paraxial''; Capítulo 4, sección ``Aceleración Solo SPM''; y Capítulo 5, sección ``Modelo Físico y Estrategia Numérica''.
+}
 
-\itemrow{P-15}{- Typo en la Página 24 cap. 3}{}
+\itemrow{P-15}{- Typo en la Página 24 cap. 3}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. Se revisó el párrafo introductorio del capítulo 3 señalado por el revisor y se identificaron errores tipográficos puntuales de duplicación de palabras y concordancia gramatical.\par
+\textbf{Cambio realizado:} Se corrigieron las expresiones ``un sistemas'', ``Por esta razón es uso'', ``es que que'' y ``acelerar acelerar'', conservando el sentido técnico del párrafo.\par
+\textbf{Ubicación en la tesis:} Capítulo 3, sección ``FPGA'', primer párrafo.
+}
 
-\itemrow{P-16}{- Pág 27 cap 3. Para aplicaciones de automatización disponer de?. Parece un typo}{}
+\itemrow{P-16}{- Pág 27 cap 3. Para aplicaciones de automatización disponer de?. Parece un typo}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La frase señalada estaba incompleta por omisión del objeto al que se refería la expresión ``disponer de''.\par
+\textbf{Cambio realizado:} Se completó la frase indicando que, para aplicaciones de automatización, disponer de memoria interna abundante podría no ser estrictamente necesario, mientras que para aplicaciones de aceleración sí resulta fundamental.\par
+\textbf{Ubicación en la tesis:} Capítulo 3, subsección ``BRAM''.
+}
 
-\itemrow{P-17}{- A que se refiere el autor, con los coeficientes de las mariposas. No se ha dado previamente ningún contexto de implementación de FFT en FPGA.}{}
+\itemrow{P-17}{- A que se refiere el autor, con los coeficientes de las mariposas. No se ha dado previamente ningún contexto de implementación de FFT en FPGA.}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La expresión ``coeficientes de las mariposas'' fue imprecisa porque introducía terminología propia de ciertas arquitecturas FFT sin haber presentado previamente ese contexto. Además, dicho nivel de detalle no era necesario para el argumento de la subsección, cuyo propósito es justificar la importancia de la memoria interna BRAM en aplicaciones de aceleración.\par
+\textbf{Cambio realizado:} Se reemplazó la expresión por una formulación más general y conservadora, indicando que la BRAM puede emplearse para almacenar resultados intermedios o tablas de coeficientes precalculados, según la arquitectura de implementación empleada. Con ello se conserva la idea técnica relevante sin introducir terminología no contextualizada.\par
+\textbf{Ubicación en la tesis:} Capítulo 3, subsección ``BRAM''.
+}
 
-\itemrow{P-18}{- Typos en sección 3.4}{}
+\itemrow{P-18}{- Typos en sección 3.4}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. Se revisaron los errores tipográficos puntuales identificados en la sección sobre máquinas de estado finito.\par
+\textbf{Cambio realizado:} Se corrigió la acentuación del título de la sección, la palabra ``fechas'' por ``flechas'' en la descripción de las transiciones y la concordancia del pie de figura de la máquina de estado de Moore.\par
+\textbf{Ubicación en la tesis:} Capítulo 3, sección ``Máquinas de estado finito''.
+}
 
-\itemrow{P-19}{- El autor trata múltiples temas pero no le da una coherencia adecuada del para que o que función cumplen dentro del cumplimiento de los objetivos}{}
+\itemrow{P-19}{- El autor trata múltiples temas pero no le da una coherencia adecuada del para que o que función cumplen dentro del cumplimiento de los objetivos}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. El capítulo dedicado a FPGA fue reestructurado para que los temas tecnológicos no aparezcan como una exposición independiente, sino como parte de la metodología de apropiación requerida para implementar algoritmos de propagación óptica en hardware reconfigurable.\par
+\textbf{Cambio realizado:} Se reorganizó el capítulo 3 alrededor de la relación entre requisitos computacionales de SPM/BPM y recursos FPGA: memoria, bloques DSP, lógica de control, procesadores embebidos, HLS, comunicación CPU--FPGA y medición de desempeño. También se añadió una tabla de trazabilidad que explicita la función de cada elemento tecnológico dentro del cumplimiento de los objetivos.\par
+\textbf{Ubicación en la tesis:} Capítulo 3, especialmente las secciones ``Función del capítulo dentro de la tesis'', ``Requisitos computacionales de los casos de estudio'' y la Tabla de trazabilidad del capítulo.
+}
 
-\itemrow{P-20}{- Solo en algunas secciones se logra justificar el texto en función de objetivos claros}{}
+\itemrow{P-20}{- Solo en algunas secciones se logra justificar el texto en función de objetivos claros}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. Se hizo explícita la relación entre el contenido del capítulo 3 y los objetivos específicos de apropiación de la herramienta, prueba piloto en FPGA básica e implementación de un problema de propagación más complejo en una FPGA robusta.\par
+\textbf{Cambio realizado:} Se modificó la estructura del capítulo para iniciar con su función metodológica y cerrar con un puente hacia la implementación BPM del capítulo 5. Las secciones ahora justifican la selección de Arty A7 y KV260, el uso de HLS, la comunicación CPU--FPGA y las pruebas de apropiación como pasos necesarios para llegar a las implementaciones de los capítulos 4 y 5.\par
+\textbf{Ubicación en la tesis:} Capítulo 3 completo, con énfasis en las secciones ``Selección de plataformas de apropiación e implementación'', ``Flujo de implementación y comunicación CPU--FPGA'' y ``Cierre metodológico hacia la implementación BPM''.
+}
 
-\itemrow{P-21}{- El autor presenta un conjunto de elementos con mucho detalle para uso de la tecnología, pero se aleja de los objetivos y foco de la temática de la tesis}{}
+\itemrow{P-21}{- El autor presenta un conjunto de elementos con mucho detalle para uso de la tecnología, pero se aleja de los objetivos y foco de la temática de la tesis}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. Se redujo el nivel de detalle operativo en el cuerpo principal y se preservó dicho material en anexos técnicos, de modo que el capítulo mantenga el foco en la aceleración de algoritmos de propagación óptica.\par
+\textbf{Cambio realizado:} Los detalles de instalación, configuración, comunicación, depuración, AXI, Ethernet, creación de IP y despliegue en KV260 se concentraron o referenciaron desde los anexos. El capítulo 3 conserva únicamente la explicación necesaria para interpretar las decisiones metodológicas: por qué se requiere memoria interna, por qué son relevantes los DSP, cómo se separan tareas entre CPU y FPGA, por qué se usa HLS y cómo las pruebas de apropiación preparan la implementación BPM.\par
+\textbf{Ubicación en la tesis:} Capítulo 3 y anexos técnicos sobre Vitis/Vivado, AXI GPIO, creación de IP con Vitis HLS, comunicación Ethernet y detalles de implementación en KV260.
+}
 
 \itemrow{P-22}{- En el capitulo 4 donde el autor relaciona la implementacion del metodo split step para la propgacion de un pulso gausiano con auto modulacion de fase. Se le solicita al autor realizar una descripcion de la sitaucion fisica a modelar, las caracteristicas del medio lineal y no lineal, las condiciones en las que dicha propagacion representa una situacion fisica real, si es una guia de onda, que valores de indice no lineal, etc. El autor debe ademas comparar los resultados numericos de ambos metodos, demostrando que las curvas resultantes son equivalentes y dar un calculo del error entre el tratamiento por CPU usando MATLAB y por FPGA}{}
 
@@ -174,7 +242,11 @@ Se evidencian múltiples deficiencias en la redacción y cohesión del documento
 
 \itemrow{P-25}{- error de redaccion entre la ecuacion 5-2 y 5-3}{}
 
-\itemrow{P-26}{- para que se relacionaron las fronteras absorbentes perfectamente acopladas PML si se realizó una implementación de frontera transparente de imposición de campo libre?}{}
+\itemrow{P-26}{- para que se relacionaron las fronteras absorbentes perfectamente acopladas PML si se realizó una implementación de frontera transparente de imposición de campo libre?}{%
+\textbf{Respuesta al revisor:} Se acoge la observación. La mención a PML podía inducir a confusión porque PML no fue implementado en esta tesis. PML corresponde a una alternativa conocida para truncar dominios computacionales mediante una región absorbente artificial; sin embargo, el método efectivamente empleado en el capítulo 5 fue una condición de frontera transparente basada en la imposición de un comportamiento de onda saliente en el borde del dominio.\par
+\textbf{Cambio realizado:} Se precisó en la tesis que PML se considera únicamente como una alternativa conceptual, pero que no hizo parte de la implementación. También se aclaró que la condición transparente seleccionada no requiere una capa absorbente adicional, no aumenta el tamaño del dominio, no introduce parámetros de absorción y se integra directamente con el sistema tridiagonal del esquema ADI--CN usado en la implementación BPM.\par
+\textbf{Ubicación en la tesis:} Capítulo 5, sección ``Condiciones de Frontera Transparentes''.
+}
 
 \end{longtable}
 
